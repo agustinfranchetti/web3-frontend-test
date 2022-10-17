@@ -1,8 +1,9 @@
 import { WagmiConfig, createClient, configureChains, chain } from "wagmi";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
+import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet";
 import { publicProvider } from "wagmi/providers/public";
-import { Profile } from "./modules/Profile";
+import { Profile } from "./components/Profile";
 const { chains, provider, webSocketProvider } = configureChains(
   [chain.mainnet, chain.polygon],
   [publicProvider()]

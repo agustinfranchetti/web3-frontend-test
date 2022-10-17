@@ -9,5 +9,11 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      /**
+       * this is a hack for error: global is not defined
+       */
+      var global = global || window
+      </script>
   </body>
 </html>
