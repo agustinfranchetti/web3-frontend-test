@@ -5,7 +5,6 @@ import {
   useEnsName,
   useNetwork,
 } from "wagmi";
-import { InjectedConnector } from "wagmi/connectors/injected";
 
 export const Profile = () => {
   const { address, isConnected } = useAccount();
@@ -15,11 +14,10 @@ export const Profile = () => {
     address,
     chainId: 1,
   });
-  const { disconnect } = useDisconnect();
-  const { connect } = useConnect({
-    connector: new InjectedConnector(),
-  });
   const { chain: network } = useNetwork();
+  const { disconnect } = useDisconnect();
+  const { connect, connectors, error, isLoading, pendingConnector } =
+    useConnect();
 
   if (isConnected)
     return (
@@ -30,6 +28,23 @@ export const Profile = () => {
         <button onClick={() => disconnect()}>Disconnect</button>
       </div>
     );
+  return (
+    <div>
+      {connectors.map((connector) => (
+        <button
+          disabled={!connector.ready}
+          key={connector.id}
+          onClick={() => connect({ connector })}
+        >
+          {connector.name}
+          {!connector.ready && " (unsupported)"}
+          {isLoading &&
+            connector.id === pendingConnector?.id &&
+            " (connecting)"}
+        </button>
+      ))}
 
-  return <button onClick={() => connect()}>Connect Wallet</button>;
+      {error && <div>{error.message}</div>}
+    </div>
+  );
 };
