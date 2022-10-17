@@ -4,7 +4,10 @@ import {
   useDisconnect,
   useEnsName,
   useNetwork,
+  useSwitchNetwork,
 } from "wagmi";
+
+import React, { useEffect } from "react";
 
 export const Profile = () => {
   const { address, isConnected } = useAccount();
@@ -18,8 +21,16 @@ export const Profile = () => {
   const { disconnect } = useDisconnect();
   const { connect, connectors, error, isLoading, pendingConnector } =
     useConnect();
+  const networkSwitch = useSwitchNetwork();
 
-  if (isConnected)
+  if (isLoading && network?.id !== 137) {
+    if (networkSwitch?.switchNetwork) {
+      //call only once to avoid infinite loop
+      networkSwitch.switchNetwork(137);
+    }
+  }
+
+  if (isConnected) {
     return (
       <div>
         <p>Connected to {network?.name}</p>
@@ -28,6 +39,8 @@ export const Profile = () => {
         <button onClick={() => disconnect()}>Disconnect</button>
       </div>
     );
+  }
+
   return (
     <div>
       {connectors.map((connector) => (

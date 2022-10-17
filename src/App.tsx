@@ -5,16 +5,16 @@ import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet";
 import { publicProvider } from "wagmi/providers/public";
 import { Profile } from "./components/Profile";
 const { chains, provider, webSocketProvider } = configureChains(
-  [chain.mainnet, chain.polygon],
+  [chain.polygon],
   [publicProvider()]
 );
 
 const client = createClient({
   autoConnect: false,
   connectors: [
-    new MetaMaskConnector({ chains: [chain.mainnet, chain.polygon] }),
+    new MetaMaskConnector({ chains: [chain.polygon] }),
     new WalletConnectConnector({
-      chains: [chain.mainnet, chain.polygon],
+      chains: [chain.polygon],
       options: {
         qrcode: true,
       },
