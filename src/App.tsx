@@ -2,7 +2,7 @@ import { WagmiConfig, createClient, configureChains, chain } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
 import { Profile } from "./modules/Profile";
 const { chains, provider, webSocketProvider } = configureChains(
-  [chain.polygon],
+  [chain.mainnet, chain.polygon],
   [publicProvider()]
 );
 
